@@ -4,6 +4,8 @@ import { toast } from "react-hot-toast";
 const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const date = new Date().toUTCString();
@@ -34,19 +36,41 @@ const Home = () => {
   }, [refresh]);
 
   const handleDelete = (tasks) => {
+    const agree = window.confirm("Are you sure to delete this task?");
     // console.log(tasks._id);
-    fetch(`http://localhost:5000/task/${tasks._id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.acknowledged) {
-          setRefresh(!refresh);
-          toast.success("successfully task delete");
-        }
-      });
+    if (agree) {
+      fetch(`http://localhost:5000/task/${tasks._id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.acknowledged) {
+            setRefresh(!refresh);
+            toast.success("successfully task delete");
+          }
+        });
+    }
   };
 
+  const handleModalToggle = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+  // const handleClose = () => {
+  //   setIsOpen(false);
+  // };
+  const handleUpdateTask = (event) => {
+    // setIsEditing(true);
+    // console.log(`update btn click`);
+    event.preventDefault();
+    const task = {
+      task: event.target.task.value,
+    };
+    console.log(task);
+  };
+
+  //   const handleCancelBtn = () => {
+  //     setIsEditing(false);
+  //   };
   return (
     <div>
       <h1 className="text-4xl font-semibold my-20">Welcome To Todo List</h1>
@@ -78,7 +102,10 @@ const Home = () => {
                 <h3>{task?.task}</h3>
                 <div className="flex my-4  ">
                   <div className="mx-auto">
-                    <button className=" mx-2 bg-cyan-400 px-2 py-1 rounded-lg  text-white font-semibold">
+                    <button
+                      onClick={handleModalToggle}
+                      className=" mx-2 bg-cyan-400 px-2 py-1 rounded-lg  text-white font-semibold"
+                    >
                       Update
                     </button>
                     <button
@@ -97,6 +124,23 @@ const Home = () => {
             </div>
           </div>
         ))}
+
+        {/* modal */}
+        {isModalOpen && (
+          <div className=" fixed inset-0 flex items-center justify-center">
+            <div className="bg-white p-6 rounded shadow-md">
+              {/* Add your modal content here */}
+              <h1 className="text-xl font-bold mb-4">model here</h1>
+              <h2>Modal Content</h2>
+              <button
+                onClick={handleModalToggle}
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
