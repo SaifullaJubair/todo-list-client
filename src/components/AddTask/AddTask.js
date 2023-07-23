@@ -8,6 +8,7 @@ const AddTask = ({ homeRefresh }) => {
     const newTask = {
       task: event.target.task.value,
       time: date,
+      completed: false,
     };
     fetch("http://localhost:5000/task", {
       method: "POST",
