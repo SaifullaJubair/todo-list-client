@@ -30,7 +30,7 @@ const Home = () => {
   // }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/task")
+    fetch("https://todo-list-server-gray.vercel.app/task")
       .then((res) => res.json())
       .then((data) => {
         setTasks(data);
@@ -52,7 +52,7 @@ const Home = () => {
       ...task,
       completed: !completed,
     };
-    fetch(`http://localhost:5000/task/${task._id}`, {
+    fetch(`https://todo-list-server-gray.vercel.app/task/${task._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

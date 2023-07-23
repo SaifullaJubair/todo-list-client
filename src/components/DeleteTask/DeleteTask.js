@@ -13,7 +13,7 @@ const DeleteTask = ({ task, homeRefresh }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/task/${task._id}`, {
+        fetch(`https://todo-list-server-gray.vercel.app/task/${task._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

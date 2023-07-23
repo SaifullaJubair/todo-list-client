@@ -10,7 +10,7 @@ const AddTask = ({ homeRefresh }) => {
       time: date,
       completed: false,
     };
-    fetch("http://localhost:5000/task", {
+    fetch("https://todo-list-server-gray.vercel.app/task", {
       method: "POST",
       headers: {
         "content-type": "application/json",

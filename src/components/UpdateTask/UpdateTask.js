@@ -13,7 +13,7 @@ const UpdateTask = ({ task, homeRefresh }) => {
       completed: false,
     };
 
-    fetch(`http://localhost:5000/task/${singleTask._id}`, {
+    fetch(`https://todo-list-server-gray.vercel.app/task/${singleTask._id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
